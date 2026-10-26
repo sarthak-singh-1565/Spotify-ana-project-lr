@@ -1,2 +1,2 @@
 # Spotify-ana-project-lr
-AI101 Spotify analysis project through Logistic Regression
+AI101 Spotify Analysis Project through Logistic Regression.
