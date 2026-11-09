@@ -1,1 +1,37 @@
 ECHO is on.
+#block 3
+print("\nMissing values in each column:")
+print(df.isnull().sum())
+missing_values = df.isnull().sum() # returns pandas series 
+print("\n")
+print("=" * 60)
+print(missing_values)
+print("\n")
+print("=" * 60)
+print(missing_values.sum())
+
+if missing_values.sum() > 0:
+
+    plt.figure(figsize=(10, 5))
+
+    missing_values[missing_values > 0].sort_values().plot(
+        kind="bar"
+    )
+
+    plt.title("Missing Values in Dataset")
+    plt.xlabel("Columns")
+    plt.ylabel("Number of Missing Values")
+
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+
+    plt.show()
+    print("SUCCESSFULLY DONE!")
+
+print("\nNumber of duplicate rows:")
+print(df.duplicated())
+print(df.duplicated().sum())
+df = df.drop_duplicates()
+df = df.dropna(how="all")
+print("\nDataset shape after removing duplicates:")
+print(df.shape)
