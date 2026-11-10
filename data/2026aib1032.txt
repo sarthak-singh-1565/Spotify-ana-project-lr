@@ -1,0 +1,54 @@
+ECHO is on.
+#block 12
+# ROC Curve 
+
+fpr, tpr, thresholds = roc_curve(
+    y_test,
+    y_probability
+)
+
+plt.figure(figsize=(7, 5))
+
+plt.plot(
+    fpr,
+    tpr,
+    label="Logistic Regression"
+)
+
+plt.plot(
+    [0, 1],
+    [0, 1],
+    linestyle="--"
+)
+
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("ROC Curve")
+
+plt.legend()
+plt.tight_layout()
+
+plt.savefig("member2_roc_curve.png")
+plt.show()
+
+
+# Precision-Recall Curve 
+
+precision_values, recall_values, thresholds = (
+    precision_recall_curve(y_test, y_probability)
+)
+
+plt.figure(figsize=(7, 5))
+
+plt.plot(
+    recall_values,
+    precision_values
+)
+
+plt.xlabel("Recall")
+plt.ylabel("Precision")
+plt.title("Precision-Recall Curve")
+
+plt.tight_layout()
+
+plt.show()
