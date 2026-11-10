@@ -1,1 +1,234 @@
-ECHO is on.
+
+2026DAB1302
+PRATIMA
+
+my blocks 
+#block 5 Data visualization
+# Histogram Plot
+
+if len(numeric_columns) > 0:
+
+    df[numeric_columns].hist(
+        figsize=(14, 10),
+        bins=20
+    )
+
+    plt.suptitle("Distribution of Numerical Features")
+    plt.tight_layout()
+
+    plt.show()
+
+
+# Box Plot
+
+for column in numeric_columns[:8]:
+
+    plt.figure(figsize=(8, 4))
+
+    sns.boxplot(x=df[column])
+
+    plt.title("Box Plot of " + column)
+    plt.xlabel(column)
+
+    plt.tight_layout()
+
+    plt.show()
+
+#block 9 Data preprocessing
+X = X.drop(columns=id_columns)
+
+numeric_columns = X.select_dtypes(
+    include=np.number
+).columns.tolist()
+
+categorical_columns = X.select_dtypes(
+    include=["object", "category", "bool"]
+).columns.tolist()
+
+if len(numeric_columns) + len(categorical_columns) == 0:
+
+    raise ValueError("No usable input features found.")
+
+
+# Data Preprocessing 
+
+numeric_pipeline = Pipeline([
+    ("imputer", SimpleImputer(strategy="median")),
+    ("scaler", StandardScaler())
+])
+
+categorical_pipeline = Pipeline([
+    ("imputer", SimpleImputer(strategy="most_frequent")),
+    ("encoder", OneHotEncoder(handle_unknown="ignore"))
+])
+
+preprocessor = ColumnTransformer([
+    ("numerical", numeric_pipeline, numeric_columns),
+    ("categorical", categorical_pipeline, categorical_columns)
+])
+
+
+# Create Logistic Regression Model 
+
+model = Pipeline([
+    ("preprocessor", preprocessor),
+    ("classifier", LogisticRegression(max_iter=1000))
+])
+
+#block 13
+# ============================================================
+#              LINEAR REGRESSION
+# ============================================================
+
+# Load Cleaned Dataset 
+
+df = pd.read_csv("spotify_cleaned.csv")
+LINEAR_TARGET = None
+possible_targets = [
+    "listening_time",
+    "listening_hours",
+    "total_listening_time",
+    "minutes_listened",
+    "songs_played_per_day",
+    "ads_listened_per_week"
+]
+if LINEAR_TARGET is None:
+
+    for column in possible_targets:
+
+        if column in df.columns:
+
+            if pd.api.types.is_numeric_dtype(df[column]):
+
+                LINEAR_TARGET = column
+                break
+if LINEAR_TARGET is None:
+
+    raise ValueError(
+        "Numerical target not detected. "
+        "Set LINEAR_TARGET manually."
+    )
+print("\nSelected Linear Regression target:", LINEAR_TARGET)
+df[LINEAR_TARGET] = pd.to_numeric(
+    df[LINEAR_TARGET],
+    errors="coerce"
+)
+
+df = df.dropna(subset=[LINEAR_TARGET]).copy()
+
+X = df.drop(columns=[LINEAR_TARGET])
+
+y = df[LINEAR_TARGET]
+
+id_columns = [
+    column for column in X.columns
+    if column.lower() in [
+        "id", "user_id", "customer_id", "index"
+    ]
+]
+
+X = X.drop(columns=id_columns)
+
+numeric_columns = X.select_dtypes(
+    include=np.number
+).columns.tolist()
+
+categorical_columns = X.select_dtypes(
+    include=["object", "category", "bool"]
+).columns.tolist()
+
+if len(numeric_columns) + len(categorical_columns) == 0:
+
+    raise ValueError("No usable input features found.")
+
+#block 18
+# Organising both Logistic and linear Regressing results Results 
+
+logistic_metrics = dict(zip(
+    logistic_results["Metric"],
+    logistic_results["Value"]
+))
+
+linear_metrics = dict(zip(
+    linear_results["Metric"],
+    linear_results["Value"]
+))
+
+# Printing Complete Project Results 
+
+print("\nLOGISTIC REGRESSION PERFORMANCE")
+print("-" * 40)
+
+for metric, value in logistic_metrics.items():
+
+    print(metric, ":", round(value, 4))
+
+
+print("\nLINEAR REGRESSION PERFORMANCE")
+print("-" * 40)
+
+for metric, value in linear_metrics.items():
+
+    print(metric, ":", round(value, 4))
+
+#R2 Score Graph for Linear Regressing model
+
+plt.figure(figsize=(6, 5))
+
+plt.bar(
+    ["Linear Regression"],
+    [linear_metrics["R2 Score"]]
+)
+
+plt.ylabel("R2 Score")
+plt.title("Linear Regression Model Performance")
+
+plt.tight_layout()
+
+plt.show()
+
+# Final Project Conclusion
+
+print("\n")
+print("=" * 60)
+print("                 PROJECT CONCLUSION")
+print("=" * 60)
+
+print(
+    "\nLogistic Regression was used to classify Spotify users "
+    "according to their churn status."
+)
+
+print(
+    "\nLinear Regression was used to predict a continuous "
+    "numerical variable."
+)
+
+print(
+    "\nThe classification model was evaluated using Accuracy, "
+    "Precision, Recall, F1 Score and ROC-AUC."
+)
+
+print(
+    "\nThe regression model was evaluated using MAE, MSE, "
+    "RMSE and R2 Score."
+)
+
+print(
+    "\nAll model results and graphs have been saved."
+)
+
+print(
+    "\nFinal combined results: final_project_results.csv"
+)
+
+print(
+    "\nFinal written summary: final_project_summary.txt"
+)
+
+print("\nTEAM LEADER WORK COMPLETED SUCCESSFULLY!")
+
+print("\n")
+print("=" * 60)
+print("             COMPLETE PROJECT FINISHED")
+print("=" * 60)
