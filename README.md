@@ -21,8 +21,8 @@ The project uses Logistic Regression for churn classification and Linear Regress
 3. Team Members and Roles
 
 Team Member| Entry Number| Role
-Sarthak    |  2026MCB1565| PPT Lead
-Piyush     |  2026EEB1392| Execution Lead
+Sarthak    |  2026MCB1565| Execution Lead
+Piyush     |  2026EEB1392| PPT Lead
 Divyanshi  |  2026AIB1032| Video Lead
 Pratima    |  2026DAB1302| Documentation Lead
 
