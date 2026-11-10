@@ -1,5 +1,64 @@
-ECHO is on.
-#block 12
+Here is the code by me(Divyanshi).
+
+
+#BLOCK4
+numeric_columns = df.select_dtypes(
+    include=np.number
+).columns.tolist()
+categorical_columns = df.select_dtypes(
+    include=["object", "category", "bool"]
+).columns.tolist()
+
+print("\nNumerical columns:")
+print(numeric_columns)
+
+print("\nCategorical columns:")
+print(categorical_columns)
+
+df.to_csv("spotify_cleaned.csv", index=False)
+print("\nCleaned dataset saved successfully!")
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+#BLOCK8
+if set(unique_values).issubset(
+    set(positive_values + negative_values)
+):
+
+    y = target_values.isin(positive_values).astype(int)
+
+elif len(unique_values) == 2:
+
+    print("Target categories:", unique_values)
+    print("Second category is treated as positive.")
+
+    y = (target_values == unique_values[1]).astype(int)
+
+else:
+
+    raise ValueError(
+        "Churn target must have exactly two categories."
+    )
+
+
+if y.nunique() != 2:
+
+    raise ValueError(
+        "Both churn classes must be present in the dataset."
+    )
+
+# Prepare Input Features 
+X = df.drop(columns=[CHURN_COLUMN])
+
+id_columns = [
+    column for column in X.columns
+    if column.lower() in [
+        "id", "user_id", "customer_id", "index"
+    ]
+]
+print("everything done successfully1")
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+#BLOCK12
 # ROC Curve 
 
 fpr, tpr, thresholds = roc_curve(
@@ -28,7 +87,7 @@ plt.title("ROC Curve")
 plt.legend()
 plt.tight_layout()
 
-plt.savefig("member2_roc_curve.png")
+plt.savefig("roc_curve.png")
 plt.show()
 
 
@@ -52,3 +111,59 @@ plt.title("Precision-Recall Curve")
 plt.tight_layout()
 
 plt.show()
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+#BLOCK17
+# Actual Values vs Predicted Values Graph 
+
+plt.figure(figsize=(7, 5))
+
+plt.scatter(
+    y_test,
+    y_pred,
+    alpha=0.6
+)
+
+minimum = min(
+    y_test.min(),
+    y_pred.min()
+)
+
+maximum = max(
+    y_test.max(),
+    y_pred.max()
+)
+
+plt.plot(
+    [minimum, maximum],
+    [minimum, maximum],
+    linestyle="--"
+)
+
+plt.xlabel("Actual Values")
+plt.ylabel("Predicted Values")
+
+plt.title("Actual vs Predicted Values")
+
+plt.tight_layout()
+
+plt.show()
+
+# Loading Model Results 
+
+logistic_results = pd.read_csv(
+    "logistic_results.csv"
+)
+
+linear_results = pd.read_csv(
+    "linear_results.csv"
+)
+
+logistic_predictions = pd.read_csv(
+    "logistic_predictions.csv"
+)
+
+linear_predictions = pd.read_csv(
+    "linear_predictions.csv"
+)
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
