@@ -20,11 +20,12 @@ The project uses Logistic Regression for churn classification and Linear Regress
 
 3. Team Members and Roles
 
-Team Member| Entry Number| Role
-Sarthak    |  2026MCB1565| Execution Lead
-Piyush     |  2026EEB1392| PPT Lead
-Divyanshi  |  2026AIB1032| Video Lead
-Pratima    |  2026DAB1302| Documentation Lead
+| Team Member | Entry Number | Role |
+|---|---|---|
+| Sarthak | 2026MCB1565 | Execution Lead |
+| Piyush | 2026EEB1392 | PPT Lead |
+| Divyanshi | 2026AIB1032 | Video Lead |
+| Pratima | 2026DAB1302 | Documentation Lead |
 
 4. Technologies Used
 
@@ -62,7 +63,7 @@ Evaluation metrics:
 - Root Mean Squared Error (RMSE)
 - R^2 Score
 6. Project Structure
-
+```
 Spotify-ana-project-lr/
 │
 ├── data/
@@ -79,6 +80,7 @@ Spotify-ana-project-lr/
 ├── README.md
 ├── requirements.txt
 └── .gitignore
+```
 
 7. GitHub Repository
 
@@ -102,11 +104,11 @@ The project includes:
 
 8. How to Run
 
-1. Open the project in VS Code or Jupyter Notebook.
-2. Navigate to the "notebook" folder or the combined project code folder.
-3. Open the relevant project notebook or Python file.
-4. Make sure the dataset is available at the path expected by the code.
-5. Run the notebook cells or Python script in sequence.
+- Open the project in VS Code or Jupyter Notebook.
+- Navigate to the "notebook" folder or the combined project code folder.
+- Open the relevant project notebook or Python file.
+- Make sure the dataset is available at the path expected by the code.
+- Run the notebook cells or Python script in sequence.
 
 9. Expected Outputs
 
