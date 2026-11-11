@@ -154,7 +154,7 @@ if len(numeric_columns) >= 2:
 
     plt.tight_layout()
 
-    plt.savefig("member1_correlation_heatmap.png")
+    plt.savefig("correlation_heatmap.png")
     plt.show()
 
 # Scatter Plot
@@ -183,7 +183,7 @@ if len(numeric_columns) >= 2:
             plt.tight_layout()
 
             plt.savefig(
-                "member1_scatter_" + str(i + 1) + ".png"
+                "scatter_" + str(i + 1) + ".png"
             )
 
             plt.show()

@@ -35,3 +35,152 @@ df = df.drop_duplicates()
 df = df.dropna(how="all")
 print("\nDataset shape after removing duplicates:")
 print(df.shape)
+
+#block 7
+# Load Cleaned Dataset 
+
+df = pd.read_csv("spotify_cleaned.csv")
+
+CHURN_COLUMN = None
+
+possible_targets = [
+    "churn",
+    "churned",
+    "is_churned",
+    "customer_churn",
+    "churn_status"
+]
+
+if CHURN_COLUMN is None:
+
+    for column in possible_targets:
+
+        if column in df.columns:
+
+            CHURN_COLUMN = column
+            break
+
+
+if CHURN_COLUMN is None:
+
+    raise ValueError(
+        "Churn column not found. Set CHURN_COLUMN manually."
+    )
+
+
+print("\nSelected churn column:", CHURN_COLUMN)
+
+
+df = df.dropna(subset=[CHURN_COLUMN]).copy()
+
+target_values = (
+    df[CHURN_COLUMN]
+    .astype(str)
+    .str.strip()
+    .str.lower()
+)
+
+positive_values = [
+    "1", "yes", "true", "churn", "churned"
+]
+
+negative_values = [
+    "0", "no", "false", "not churn", "not churned", "retained"
+]
+
+unique_values = target_values.unique().tolist()
+
+
+#block 11
+# Saving Results
+
+logistic_results = pd.DataFrame({
+    "Metric": [
+        "Accuracy",
+        "Precision",
+        "Recall",
+        "F1 Score",
+        "ROC AUC"
+    ],
+    "Value": [
+        accuracy,
+        precision,
+        recall,
+        f1,
+        roc_auc
+    ]
+})
+
+logistic_results.to_csv(
+    "logistic_results.csv",
+    index=False
+)
+
+logistic_predictions = pd.DataFrame({
+    "Actual": y_test.values,
+    "Predicted": y_pred,
+    "Probability": y_probability
+})
+
+logistic_predictions.to_csv(
+    "logistic_predictions.csv",
+    index=False
+)
+
+
+# Confusion Matrix 
+
+cm = confusion_matrix(y_test, y_pred)
+
+plt.figure(figsize=(6, 5))
+
+sns.heatmap(
+    cm,
+    annot=True,
+    fmt="d",
+    cmap="Blues"
+)
+
+plt.title("Logistic Regression - Confusion Matrix")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+
+plt.tight_layout()
+
+plt.savefig("member2_confusion_matrix.png")
+plt.show()
+
+
+#block 16
+# Saving Results
+
+linear_results = pd.DataFrame({
+    "Metric": [
+        "MAE",
+        "MSE",
+        "RMSE",
+        "R2 Score"
+    ],
+    "Value": [
+        mae,
+        mse,
+        rmse,
+        r2
+    ]
+})
+
+linear_results.to_csv(
+    "linear_results.csv",
+    index=False
+)
+
+linear_predictions = pd.DataFrame({
+    "Actual": y_test.values,
+    "Predicted": y_pred,
+    "Residual": y_test.values - y_pred
+})
+
+linear_predictions.to_csv(
+    "linear_predictions.csv",
+    index=False
+)
